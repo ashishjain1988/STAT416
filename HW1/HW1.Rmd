@@ -1,0 +1,42 @@
+---
+title: "STAT416 Assignment 1"
+author: "Ashish Jain"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+    echo = TRUE,
+    message = FALSE,
+    warning = FALSE
+)
+```
+
+#Question 1:
+
+##i).
+
+##ii).
+
+##iii).
+
+##iv).
+
+##v).
+
+##vi).
+
+##vii).
+
+#Question 2:
+
+
+
+
+#Question 5:
+
+```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+library("tidyverse")
+
+
+```
