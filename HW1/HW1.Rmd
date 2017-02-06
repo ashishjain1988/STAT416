@@ -66,9 +66,6 @@ fisher.test(FisherTestMatrix)
 
 As, seen from the Fisher's exact test the P-Value is 0.06245 which is greater than 0.05, so we fail to reject the null hypothesis with 95% confidence and hence there is no evidence for lane effect in terms of mapping rate.
 
-#Question 4:
-
-
 #Question 5:
 
 i).
@@ -90,13 +87,26 @@ countData<-read.table(paste0(path,"hwk1_4.csv"),header = TRUE,sep = ",")
 totalCount<-sum(as.matrix(countData))
 
 muValues<-apply(as.matrix(countData),1,function(x){return(sum(x)/totalCount)})
+countLanes<-apply(as.matrix(countData),2,function(x){return(sum(x))})
 
-chitestlist <- apply(as.matrix(countData),1,chisq.test)
-chitest.pval <- sapply(chitestlist, '[[', 'p.value')
-
-#qqplot(x2,rchisq(10000,df=1))
-#qqplot(chitest.pval,"punif",0,1,plot.it = TRUE)
-#plot(chitest.pval)
-
-ks.test(chitest.pval,"punif",0,1)
+pValues = c()
+  
+for(i in 1:length(muValues))
+{
+  testStat<-0
+  #for(j in ncol(countData))
+  #{
+   # testStat <- (testStat + (((countData[i,j] - muValues[i]*countLanes[j])^2)/(muValues[i]*countLanes[j])))
+  #}
+  testStat <- sum((countData[i,] - muValues[i]*countLanes)^2/(muValues[i]*countLanes))
+  #print(testStat)
+  #print(1-pchisq(testStat,3))
+  pValues<-c(pValues,(1-pchisq(testStat,3)))
+}
+qqplot(pValues,runif(10000),plot.it=TRUE, xlab = "P-Values",main = "QQ Plot")
+ks.test(pValues,"punif",0,1)
 ```
+
+We used the ks.test to check whether the p-values follows that U(0,1) or not. As you can see, the P-value is significant and from that we can reject the null hypothesis which means that the P-Values do not follow U(0,1).
+
+![Question 4](https://raw.githubusercontent.com/ashishjain1988/BCB570/master/HW2/Question2.jpg)
