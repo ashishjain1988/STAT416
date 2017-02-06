@@ -18,31 +18,39 @@ i). The treatment factors considered in the experiment is Nitrogen.
 
 ii). The treatment level considered in the experiment for Nitrogen is high and low.
 
-iii). No, this is not a full factorial experimental design.
+iii). Yes this is a full factorial experimental design.
 
-iv). The experimental units in this experiment is pots and genotype. There are 12 pots and 2 genotypes.
+iv). The experimental units in this experiment is pots. There are 12 pots.
 
-v). The observational units is the seedling.
+v). The observational unit is the seedling.
 
-vi). Yes this experimental involves blocking. The block is the seedling.
+vi). Yes this experimental involves blocking. The block is the genotype of the seedling.
 
-vii). It is a randomized incomplete block design. This is due to the fact that first the blocks are created on the basis of genotype and after that first the high nitrogen treated pots are selected which created bias in the selection and making it ranomized incomplete.
+vii). It is a randomized complete block design. This is due to the fact that first the blocks are created on the basis of genotype and after that each block is treated with both the levels of nitrogen.
 
 #Question 2:
 
 There are different sources of variabilty in this experiment.
 
 ##i). Biological Variabilty
+Genotype Variabilty, and Natural variation among biological replicates.  
 
 ##ii). Technical Variabilty
+Sequencing depth, lane effect, adapter effect, and library prepration effect.
 
 ##iii). Treatment Effect
+The variability in the amount of nitrogen used for the treatment.
 
+##iv). Block effect
+We have two different genotypes which will cause the block effect.
+
+Yes, the seedlings with same genotype and same treatment are the biological replicates. There is no technical replicates involved in this experiment.
 
 #Question 3:
 $$H_0: \ p_1 = p_2 \ vs \ H_1:p_1 \neq p_2$$
 
 where,$p_1$ is the probability of drawing reads for gene g in the first lane and $p_2$ is the probability of drawing reads for gene g in the second lane.
+
 ```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 library("tidyverse")
 table<-data.frame(Lane=c("Gene g count","Total read Count"),"1"=c("50","10M"),"2"=c("25","8M"))
@@ -56,22 +64,9 @@ FisherTestMatrix <-
 fisher.test(FisherTestMatrix)
 ```
 
-As, seen from the Fisher's exact test the P-Value is 0.06245 which is greater than 0.05, so we cannot reject the null hypothesis with 95% confidence and hence there is no evidence for lane effect in terms of mapping rate.
+As, seen from the Fisher's exact test the P-Value is 0.06245 which is greater than 0.05, so we fail to reject the null hypothesis with 95% confidence and hence there is no evidence for lane effect in terms of mapping rate.
 
 #Question 4:
-
-i). 
-
-ii).
-
-iii).
-
-iv).
-
-v).
-
-vi).
-
 
 
 #Question 5:
@@ -83,7 +78,7 @@ $$H_0: T.S. \ \sim \ \chi^2_{J-1} \ VS \ H_1: T.S. \ \nsim \ \chi^2_{J-1}$$
 
 where, 
 $$T.S. = \sum \frac{{Y_{gj}-C_j \hat{\mu_g}}^2}{C_j\hat{\mu_g}}$$
-$J-1$ is the number of independent observations – the number of estimated parameters, $j$ is the lane number, \^{\mu_g} is the estimated mean.
+$J-1$ is the number of independent observations – the number of estimated parameters, $j$ is the lane number, $\hat{\mu_g}$ is the estimated mean.
 
 
 ```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
@@ -91,13 +86,17 @@ library("tidyverse")
 library("MASS")
 path<-"https://raw.githubusercontent.com/ashishjain1988/STAT416/master/HW1/"
 countData<-read.table(paste0(path,"hwk1_4.csv"),header = TRUE,sep = ",")
-mean.countData<-apply(as.matrix(countData),1,mean)
-qqnorm(mean.countData)
+#mean.countData<-apply(as.matrix(countData),1,mean)
+totalCount<-sum(as.matrix(countData))
+
+muValues<-apply(as.matrix(countData),1,function(x){return(sum(x)/totalCount)})
 
 chitestlist <- apply(as.matrix(countData),1,chisq.test)
 chitest.pval <- sapply(chitestlist, '[[', 'p.value')
-plot(chitest.pval)
+
+#qqplot(x2,rchisq(10000,df=1))
+#qqplot(chitest.pval,"punif",0,1,plot.it = TRUE)
+#plot(chitest.pval)
+
 ks.test(chitest.pval,"punif",0,1)
 ```
-
-
