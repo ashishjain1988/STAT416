@@ -79,7 +79,6 @@ $J-1$ is the number of independent observations – the number of estimated para
 
 
 ```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-library("tidyverse")
 library("MASS")
 path<-"https://raw.githubusercontent.com/ashishjain1988/STAT416/master/HW1/"
 countData<-read.table(paste0(path,"hwk1_4.csv"),header = TRUE,sep = ",")
@@ -90,27 +89,23 @@ muValues<-apply(as.matrix(countData),1,function(x){return(sum(x)/totalCount)})
 countLanes<-apply(as.matrix(countData),2,function(x){return(sum(x))})
 
 pValues = c()
-#pValues<-apply(countData,1,function(x){
-#  mu<-sum(x)/totalCount
-#  t<-sum(((countData[i,] - mu*countLanes)^2)/(mu*countLanes))
-#  return(1-pchisq(t,3))
-#  })
-for(i in 1:length(muValues))
-{
-  testStat<-0
-  #for(j in ncol(countData))
-  #{
-   # testStat <- (testStat + (((countData[i,j] - muValues[i]*countLanes[j])^2)/(muValues[i]*countLanes[j])))
-  #}
-  testStat <- sum((countData[i,] - muValues[i]*countLanes)^2/(muValues[i]*countLanes))
-  #print(testStat)
-  #print(1-pchisq(testStat,3))
-  pValues<-c(pValues,(1-pchisq(testStat,3)))
-}
-qqplot(pValues,runif(10000),plot.it=TRUE, xlab = "P-Values",main = "QQ Plot")
+pValues<-apply(countData,1,function(x){
+   mu<-sum(x)/totalCount
+  t<-sum(((x - mu*countLanes)^2)/(mu*countLanes))
+  return(1-pchisq(t,3))
+  })
+
+unifDis<-runif(10000)
+qqplot(pValues,unifDis,plot.it=TRUE, xlab = "P-Values",main = "QQ Plot")
+qqline(unifDis)
+#data.frame(pval=pValues) %>% ggplot(aes(sample = pval)) + stat_qq()
+hist(pValues, xlab = "P-Values",main = "P-Values Distribution")
+#data.frame(pval=pValues) %>% ggplot(aes(x=pval)) +geom_histogram()
 ks.test(pValues,"punif",0,1)
 ```
 
 We used the ks.test to check whether the p-values follows that U(0,1) or not. As you can see, the P-value is significant and from that we can reject the null hypothesis which means that the P-Values do not follow U(0,1). From this we can conclude that the data do not follow poisson distribution.
 
-![Question 4](https://raw.githubusercontent.com/ashishjain1988/BCB570/master/HW2/Question2.jpg)
+#Question 4:
+
+![Question 4](https://raw.githubusercontent.com/ashishjain1988/STAT416/master/HW1/IMG_20170206_180220.jpg)
