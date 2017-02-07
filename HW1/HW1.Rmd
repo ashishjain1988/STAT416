@@ -90,7 +90,11 @@ muValues<-apply(as.matrix(countData),1,function(x){return(sum(x)/totalCount)})
 countLanes<-apply(as.matrix(countData),2,function(x){return(sum(x))})
 
 pValues = c()
-  
+#pValues<-apply(countData,1,function(x){
+#  mu<-sum(x)/totalCount
+#  t<-sum(((countData[i,] - mu*countLanes)^2)/(mu*countLanes))
+#  return(1-pchisq(t,3))
+#  })
 for(i in 1:length(muValues))
 {
   testStat<-0
@@ -107,6 +111,6 @@ qqplot(pValues,runif(10000),plot.it=TRUE, xlab = "P-Values",main = "QQ Plot")
 ks.test(pValues,"punif",0,1)
 ```
 
-We used the ks.test to check whether the p-values follows that U(0,1) or not. As you can see, the P-value is significant and from that we can reject the null hypothesis which means that the P-Values do not follow U(0,1).
+We used the ks.test to check whether the p-values follows that U(0,1) or not. As you can see, the P-value is significant and from that we can reject the null hypothesis which means that the P-Values do not follow U(0,1). From this we can conclude that the data do not follow poisson distribution.
 
 ![Question 4](https://raw.githubusercontent.com/ashishjain1988/BCB570/master/HW2/Question2.jpg)
