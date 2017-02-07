@@ -82,10 +82,7 @@ $J-1$ is the number of independent observations – the number of estimated para
 library("MASS")
 path<-"https://raw.githubusercontent.com/ashishjain1988/STAT416/master/HW1/"
 countData<-read.table(paste0(path,"hwk1_4.csv"),header = TRUE,sep = ",")
-#mean.countData<-apply(as.matrix(countData),1,mean)
 totalCount<-sum(as.matrix(countData))
-
-muValues<-apply(as.matrix(countData),1,function(x){return(sum(x)/totalCount)})
 countLanes<-apply(as.matrix(countData),2,function(x){return(sum(x))})
 
 pValues = c()
@@ -94,7 +91,6 @@ pValues<-apply(countData,1,function(x){
   t<-sum(((x - mu*countLanes)^2)/(mu*countLanes))
   return(1-pchisq(t,3))
   })
-
 unifDis<-runif(10000)
 qqplot(pValues,unifDis,plot.it=TRUE, xlab = "P-Values",main = "QQ Plot")
 qqline(unifDis)
