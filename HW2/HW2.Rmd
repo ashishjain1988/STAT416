@@ -115,7 +115,7 @@ $$
 $$
 
 ##e).
-(@one)$$
+$$
 \label{eq:test}
 \begin{aligned}
  Var(\bar{Y_{1..}}- \bar{Y_{2..}}) &\stackrel{From Slides}{=} Var(T_1 + T_2 + \bar{b_{1.}} + \bar{b_{2.}} + \bar{e_{1..}} + \bar{e_{2..}}) \\
@@ -126,7 +126,7 @@ $$
 $$
 
 i).
-In Design 1, n is equal to 8 and m is equal to 8, using @: (@one);
+In Design 1, n is equal to 8 and m is equal to 8,
 $$
 \begin{aligned}
  Var(\bar{Y_{1..}}- \bar{Y_{2..}}) &= 2*\frac{{\sigma_b}^2}{n} + 2*\frac{{\sigma_e}^2}{m}
