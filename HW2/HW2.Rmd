@@ -16,15 +16,15 @@ knitr::opts_chunk$set(
 
 a). The treatment factors considered in the experiment is temperature and genotype.
 
-b). The treatment levels considered in the experiment for temperature are normal, cold and hot and for genotype it is .
+b). The treatment levels considered in the experiment for temperature are normal, cold and hot and for genotype it is breed 1 and breed 2.
 
 c). Expermimental units in this experiment is the house. We have six houses in this experiment consisting of 4 chicken each.
 
 d). The observational unit in this experiment is the chicken.
 
-e). 
+e). Yes, this experiment involved blocking and the blocks are the houses.
 
-f). 
+f). It is a randomized complete block design.
 
 #Question 2:
 
