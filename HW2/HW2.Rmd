@@ -28,6 +28,11 @@ f). This experiment follows a split-plot design. In this experiment, the houses 
 
 #Question 2:
 
+![Experimental Design - Question 2](https://raw.githubusercontent.com/ashishjain1988/STAT416/master/HW2/question2.jpg)
+
+The design for this experiment is shown in figure 1. In the figure, $C_{i,j}$ represents the chicken with i as the temperature such that i $\in$ (Hot, Normal, Cold) and j as the breed of chicken such as j $\in$ (Breed 1, Breed 2). In order to answer the questions effectively, in our design, we sequence houses 1, 2, and 3 in one flow cell and the houses 4, 5, and 6 in the other flow cell.
+
+Our question is to find genes differentially expressed between the two breeds under each temperature condition. In our design, we are sequencing the samples from the same house in the same flow cell in such a way that we can eliminate the adapter effect. In addition to that, we are also eliminating the flow cell effect by sequencing the biological replicates (houses) in terms of temperature on the different flow cell. By using this design, we can eliminate almost all the effects except the lane effect. For the secondary goal, we have to compare the temperature conditions for each breed. In this case, the only variance that will come in the estimation of this goal will be due to the house and the lane effect. In this case, the temperature difference and the house effect will be confounding as per our design.
 
 #Question 3:
 
