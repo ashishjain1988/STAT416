@@ -14,19 +14,20 @@ knitr::opts_chunk$set(
 
 #Question 1:
 
-a). The treatment factors considered in the experiment is temperature and genotype.
+a). The treatment factors considered in the experiment are temperature and breed of the mouse.
 
-b). The treatment levels considered in the experiment for temperature are normal, cold and hot and for genotype it is breed 1 and breed 2.
+b). The treatment levels considered in the experiment for temperature are normal, cold and hot and for genotype, it is breed 1 and breed 2.
 
-c). Expermimental units in this experiment is the house. We have six houses in this experiment consisting of 4 chicken each.
+c). Experimental units in this experiment are the houses (6 houses) for temperature as treatment factor and chickens (24 chickens) for the breed as the treatment factor.
 
-d). The observational unit in this experiment is the chicken.
+d). The observational units in this experiment are the chickens.
 
-e). Yes, this experiment involved blocking and the blocks are the houses.
+e). There is no blocking involved in this experiment.
 
-f). It is a randomized complete block design.
+f). This experiment follows a split-plot design. In this experiment, the houses are the whole plot units because the levels of the temperature (whole-plot factor) are randomly assigned to it. The split-plots units are the chickens because the levels of the genotype (split-plot factor) is randomly assigned to the chickens.
 
 #Question 2:
+
 
 #Question 3:
 
