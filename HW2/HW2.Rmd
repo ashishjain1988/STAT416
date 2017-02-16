@@ -35,7 +35,7 @@ The design for this experiment is shown in figure 1. In the figure, $C_{i,j}$ re
 Our question is to find genes differentially expressed between the two breeds under each temperature condition. In our design, we are sequencing the samples from the same house in the same flow cell in such a way that we can eliminate the adapter effect. In addition to that, we are also eliminating the flow cell effect by sequencing the biological replicates (houses) in terms of temperature on the different flow cell. By using this design, we can eliminate almost all the effects except the lane effect. For the secondary goal, we have to compare the temperature conditions for each breed. In this case, the only variance that will come in the estimation of this goal will be due to the house and the lane effect. In this case, the temperature difference and the house effect will be confounding as per our design.
 
 #Question 3:
-
+In this experiment, we will design the phase 2 in such a way that we will confound the house effect and the session effect. For that, we will prepare each sample in a house in one session (6 sessions in total for 6 houses). In a session, we can take processing order to be random such that it will eliminate any bias related to processing. After that, for phase 3 we will match the order of RNA extraction from samples within phase 3 sessions to that of the tissue collection order used in phase 2 and again take the random processing order. These confounding will be applied to the design which will help us to answer the first research question in which we need to find genes differentially expressed between the two breeds under each temperature conditionIn this case, again we can confound the session effect and the house effect. For the secondary goal, we have to compare the temperature conditions for each breed. In this case, the variance/effect that will come in the estimation of this goal will be due to the house and the lane effect. In this case, the temperature difference and the house effect will also be confounding as per our design.
 
 #Question 4:
 
@@ -103,7 +103,7 @@ $$
 i).
 $$
 \begin{aligned}
- Var(\sum{n}{i=1}Y_i) &\stackrel{ind.}{=} Var(Y_1) + Var(Y_2) + \dots + Var(Y_n) \\
+ Var(\sum_{i=1}^n Y_i) &\stackrel{ind.}{=} Var(Y_1) + Var(Y_2) + \dots + Var(Y_n) \\
  &= \sigma^2 + \sigma^2 + \dots + \sigma^2\\
  &= n\sigma^2
 \end{aligned}
@@ -112,7 +112,7 @@ $$
 ii).
 $$
 \begin{aligned}
- Var(\frac{\sum{n}{i=1}Y_i}{n}) &\stackrel{ind.}{=} Var(\frac{(Y_1)}{n}) + Var(\frac{(Y_2)}{n}) + \dots + Var(\frac{(Y_n)}{n})\\
+ Var(\frac{\sum_{i=1}^n Y_i}{n}) &\stackrel{ind.}{=} Var(\frac{(Y_1)}{n}) + Var(\frac{(Y_2)}{n}) + \dots + Var(\frac{(Y_n)}{n})\\
  &= \frac{Var(Y_1)}{n^2} + \frac{Var(Y_2)}{n^2} + \dots + \frac{Var(Y_n)}{n^2} \\
  &= \frac{\sigma^2}{n^2} + \frac{\sigma^2}{n^2} + \dots + \frac{\sigma^2}{n^2} \\
  &= n*\frac{\sigma^2}{n^2} \\
