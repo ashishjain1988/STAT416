@@ -10,6 +10,8 @@ knitr::opts_chunk$set(
     message = FALSE,
     warning = FALSE
 )
+#source("http://bioconductor.org/biocLite.R") 
+#biocLite("edgeR")
 library("edgeR")
 ```
 
@@ -19,16 +21,53 @@ library("edgeR")
 
 #Question 2:
 ```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
+data<-read.csv("https://raw.githubusercontent.com/ashishjain1988/STAT416/master/HW3/hwk3_2.csv")
+mseMethod1 = sum((data[,2] - mean(data[,2])) ^ 2) / nrow(data)
+mseMethod2 = sum((data[,3] - mean(data[,3])) ^ 2) / nrow(data)
+print(paste0("MSE of the first method is ",mseMethod1))
+print(paste0("MSE of the second method is ",mseMethod2))
 ```
 
-#Question 3:
-```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+From the results, it is seen that the Mean Square error of the first method is less than the second method, thus the first method is better in terms of estimatig the log-fold-change.
 
+#Question 3:
+
+##a).
+```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+data1<-read.csv("https://raw.githubusercontent.com/ashishjain1988/STAT416/master/HW3/hwk3_31.csv")
+data2<-read.csv("https://raw.githubusercontent.com/ashishjain1988/STAT416/master/HW3/hwk3_32.csv")
+```
+
+
+##b).
+```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+##Upper Quartile
+Cij1<-calcNormFactors(data1, method = 'upperquartile') * apply(data1, 2, sum)
+print(Cij1)
+Cij2<-calcNormFactors(data2, method = 'upperquartile') * apply(data2, 2, sum)
+print(Cij2)
+```
+
+
+##c).
+```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+##DESeq
+Cij1<-calcNormFactors(data1, method = 'RLE') * apply(data1, 2, sum)
+print(Cij1)
+Cij2<-calcNormFactors(data2, method = 'RLE') * apply(data2, 2, sum)
+print(Cij2)
+```
+
+##d).
+```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+##TMM
+Cij1<-calcNormFactors(data1, method = 'TMM') * apply(data1, 2, sum)
+print(Cij1)
+Cij2<-calcNormFactors(data2, method = 'TMM') * apply(data2, 2, sum)
+print(Cij2)
 ```
 
 #Question 4:
 ```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
 ```
 
