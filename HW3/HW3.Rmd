@@ -33,11 +33,19 @@ From the results, it is seen that the Mean Square error of the first method is l
 #Question 3:
 
 ##a).
+
+For each gene of length L with m reads, the probability to observe those reads from the random mapping of the background level is the probability to observe at least m $(Y \geq m)$ reads based on $Y \sim Poisson(L*p0)$ where $p0$  the background rate or ull probability to observe a hit on one base pair.
+
 ```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 data1<-read.csv("https://raw.githubusercontent.com/ashishjain1988/STAT416/master/HW3/hwk3_31.csv")
 data2<-read.csv("https://raw.githubusercontent.com/ashishjain1988/STAT416/master/HW3/hwk3_32.csv")
+p0<-5e-6
+m<-3
+L<-1000
+ppois(m,L*p0, lower.tail=FALSE) +dpois(m,L*p0)
 ```
 
+As the probability of $P(Y \ge m)$ for this gene is less than 0.05, so we can reject the null hypothesis and say that these reads does not follows Poission distribution, therefore these reads are not due to random mapping.
 
 ##b).
 ```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
