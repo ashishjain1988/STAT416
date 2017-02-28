@@ -45,7 +45,7 @@ L<-1000
 ppois(m,L*p0, lower.tail=FALSE) +dpois(m,L*p0)
 ```
 
-As the probability of $P(Y \ge m)$ for this gene is less than 0.05, so we can reject the null hypothesis and say that these reads does not follows Poission distribution, therefore these reads are not due to random mapping.
+As the probability of $P(Y \ge m)$ for this gene is less than 0.05, so we can reject the null hypothesis and say that these reads does not come from Poission distribution with mean $L*p0$, therefore these reads are not due to random mapping.
 
 ##b).
 ```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
