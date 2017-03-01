@@ -18,12 +18,11 @@ library("edgeR")
 #Question 1:
 
 
-
 #Question 2:
 ```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 data<-read.csv("https://raw.githubusercontent.com/ashishjain1988/STAT416/master/HW3/hwk3_2.csv")
-mseMethod1 = sum((data[,2] - mean(data[,2])) ^ 2) / nrow(data)
-mseMethod2 = sum((data[,3] - mean(data[,3])) ^ 2) / nrow(data)
+mseMethod1 <- sum((data[,2] - mean(data[,2])) ^ 2) / nrow(data)
+mseMethod2 <- sum((data[,3] - mean(data[,3])) ^ 2) / nrow(data)
 print(paste0("MSE of the first method is ",mseMethod1))
 print(paste0("MSE of the second method is ",mseMethod2))
 ```
@@ -34,7 +33,7 @@ From the results, it is seen that the Mean Square error of the first method is l
 
 ##a).
 
-For each gene of length L with m reads, the probability to observe those reads from the random mapping of the background level is the probability to observe at least m $(Y \geq m)$ reads based on $Y \sim Poisson(L*p0)$ where $p0$  the background rate or ull probability to observe a hit on one base pair.
+For each gene with length L and having m reads, the probability to observe those reads from the random mapping of the background level is the probability to observe at least m $P(Y \geq m)$ reads based on $Y \sim Poisson(L*p0)$ where $p0$ is the background rate or null probability to observe a hit on one base pair.
 
 ```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 data1<-read.csv("https://raw.githubusercontent.com/ashishjain1988/STAT416/master/HW3/hwk3_31.csv")
@@ -45,14 +44,16 @@ L<-1000
 ppois(m,L*p0, lower.tail=FALSE) +dpois(m,L*p0)
 ```
 
-As the probability of $P(Y \ge m)$ for this gene is less than 0.05, so we can reject the null hypothesis and say that these reads does not come from Poission distribution with mean $L*p0$, therefore these reads are not due to random mapping.
+As the probability of $P(Y \ge m)$ for this gene is very less (less than 0.05), so we can say that these reads are true signals and not due to background noise or random mapping.
 
 ##b).
 ```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 ##Upper Quartile
 Cij1<-calcNormFactors(data1, method = 'upperquartile') * apply(data1, 2, sum)
+print("Normalization factor Cij for dataset 1")
 print(Cij1)
 Cij2<-calcNormFactors(data2, method = 'upperquartile') * apply(data2, 2, sum)
+print("Normalization factor Cij for dataset 2")
 print(Cij2)
 ```
 
@@ -61,8 +62,10 @@ print(Cij2)
 ```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 ##DESeq
 Cij1<-calcNormFactors(data1, method = 'RLE') * apply(data1, 2, sum)
+print("Normalization factor Cij for dataset 1")
 print(Cij1)
 Cij2<-calcNormFactors(data2, method = 'RLE') * apply(data2, 2, sum)
+print("Normalization factor Cij for dataset 2")
 print(Cij2)
 ```
 
@@ -70,12 +73,40 @@ print(Cij2)
 ```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 ##TMM
 Cij1<-calcNormFactors(data1, method = 'TMM') * apply(data1, 2, sum)
+print("Normalization factor Cij for dataset 1")
 print(Cij1)
 Cij2<-calcNormFactors(data2, method = 'TMM') * apply(data2, 2, sum)
+print("Normalization factor Cij for dataset2")
 print(Cij2)
 ```
 
 #Question 4:
+
+##a).
 ```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+y<-c(53,72,37,135,157,189)
+log.75q<-c(123,236,195,208,164,171)
+trt = as.factor(c(1, 1, 1, 2, 2, 2))
+#cbind(trt, y, log.75q)
+o = glm(y ~ trt, family = poisson(link = log), offset = log.75q)
+summary(o)
+a = anova(o, test = "Chisq")
+print(a)
+phihat = deviance(o) / df.residual(o)
+print(phihat)
+1 - pchisq(deviance(o), df.residual(o))
 ```
 
+The phihat in this case is greater than 1 which is also shown by the chi-square test. This means that the data is over-dispersed compare to poission model.
+
+##b).
+
+As, the data is over-dispersed we need to use F-test based on quasi-likelihood method to calculate the differential expression analysis instead of Likelihood ratio test.
+```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+Fstat = a[2,2] / a[2,1] / phihat
+print(Fstat)
+pvalue = 1 - pf(Fstat, a[2,1], a[2,3])
+print(pvalue)
+```
+
+As, the p-value is less than 0.05, we can reject the null hypothesis and say that this gene is differentially expressed in the two genotypes.
