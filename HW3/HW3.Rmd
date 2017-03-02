@@ -15,9 +15,6 @@ knitr::opts_chunk$set(
 library("edgeR")
 ```
 
-#Question 1:
-
-
 #Question 2:
 ```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 data<-read.csv("https://raw.githubusercontent.com/ashishjain1988/STAT416/master/HW3/hwk3_2.csv")
@@ -85,7 +82,8 @@ print(Cij2)
 ##a).
 ```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 y<-c(53,72,37,135,157,189)
-log.75q<-c(123,236,195,208,164,171)
+Cij<-c(123,236,195,208,164,171)
+log.75q<-log(Cij)
 trt = as.factor(c(1, 1, 1, 2, 2, 2))
 #cbind(trt, y, log.75q)
 o = glm(y ~ trt, family = poisson(link = log), offset = log.75q)
@@ -97,7 +95,7 @@ print(phihat)
 1 - pchisq(deviance(o), df.residual(o))
 ```
 
-The phihat in this case is greater than 1 which is also shown by the chi-square test. This means that the data is over-dispersed compare to poission model.
+The phihat in this case is greater than 1. This is also confirmed by the chi-square test that the data is over-dispersed with significant p-value. This means that the data is over-dispersed compare to poission model.
 
 ##b).
 
