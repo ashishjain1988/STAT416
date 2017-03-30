@@ -1,0 +1,83 @@
+---
+title: "STAT416 Assignment 4"
+author: "Ashish Jain"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+    echo = TRUE,
+    message = FALSE,
+    warning = FALSE
+)
+```
+##Question 2:
+
+####a).
+```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+p.values<-read.table("/Users/jain/Desktop/hwk4_q2.txt")
+p.value<-p.values[,1]
+padjusta<-p.adjust(p.value,method = "bonferroni")
+padjustTa<-rep(FALSE,length(padjusta))
+padjustTa[padjusta<=0.05]<-TRUE
+deg<-length(padjustTa[padjustTa == TRUE])
+```
+
+The number of differential expressed genes by using Bonferroni method are `r deg`.
+
+####b).
+```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+padjust<-p.adjust(p.value,method = "holm")
+padjustT<-rep(FALSE,length(padjust))
+padjustT[padjust<=0.05]<-TRUE
+deg<-length(padjustT[padjustT == TRUE])
+```
+
+The number of differential expressed genes by using Holm's method are `r deg`.
+
+####c).
+```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+#c.
+padjust<-p.adjust(p.value,method = "BH")
+padjustT<-rep(FALSE,length(padjust))
+padjustT[padjust<=0.05]<-TRUE
+deg<-length(padjustT[padjustT == TRUE])
+```
+
+The number of differential expressed genes by using Benjamini and Hochberg’s method are `r deg`.
+
+####d).
+```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+#source("http://bioconductor.org/biocLite.R")
+#biocLite("qvalue")
+library(qvalue)
+qobj <- qvalue(p.value,fdr.level=0.05)
+pi0Number<-qobj$pi0
+STres <- qobj$qvalues
+padjustTd<-rep(FALSE,length(STres))
+padjustTd[STres<=0.05]<-TRUE
+deg<-length(padjustTd[padjustTd == TRUE])
+```
+
+The number of differential expressed genes by using Storey and Tibshirani’s method are `r deg`. The $\pi_0$ value is `r pi0Number`.
+
+####e).
+```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+getTable<-function(padjust)
+{
+  first200<-padjust[1:200]
+  TP<-length(first200[first200 == TRUE])
+  FN<-200-TP
+  other800<-padjust[201:1000]
+  FP<-length(other800[other800 == TRUE])
+  TN<-800-FP
+  return(c(TN,FN,FP,TP))
+}
+parta<-getTable(padjustTa)
+table<-data.frame(Properties=c("True Null","False Null"), "Accept Null"= c(parta[1],parta[2]),"Reject Null"=c(parta[3],parta[4]))
+knitr::kable(table,caption = "Table for Part a")
+
+parta<-getTable(padjustTd)
+table<-data.frame(Properties=c("True Null","False Null"), "Accept Null"= c(parta[1],parta[2]),"Reject Null"=c(parta[3],parta[4]))
+knitr::kable(table,caption = "Table for Part d")
+```
