@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 
 ####a).
 ```{r, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-p.values<-read.table("/Users/jain/Desktop/hwk4_q2.txt")
+p.values<-read.table("https://raw.githubusercontent.com/ashishjain1988/STAT416/master/HW4/hwk4_q2.txt")
 p.value<-p.values[,1]
 padjusta<-p.adjust(p.value,method = "bonferroni")
 padjustTa<-rep(FALSE,length(padjusta))
